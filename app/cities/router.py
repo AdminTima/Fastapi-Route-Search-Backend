@@ -12,6 +12,11 @@ def get_all():
     return service.get_all_cities()
 
 
+@cities_router.get("/detail/{city_id}", response_model=CityOutSchema)
+def get_city(city_id: int):
+    return service.get_city(city_id)
+
+
 @cities_router.post("/", response_model=CityOutSchema)
 def create_city(city: CitySchema):
     return service.create_city(city.dict())

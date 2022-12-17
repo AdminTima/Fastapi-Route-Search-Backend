@@ -30,4 +30,11 @@ def get_all_cities(repo: BaseRepository):
     return repo.get_all(Cities)
 
 
+@BaseRepository.get_repo
+def get_city(repo: BaseRepository, city_id):
+    city = repo.get_by_id(Cities, city_id)
+    if not city:
+        raise BaseApiException.bad_request("No city with provided id")
+    return city
+
 

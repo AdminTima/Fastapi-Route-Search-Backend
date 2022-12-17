@@ -13,6 +13,11 @@ def get_all():
     return service.get_all_trains()
 
 
+@trains_router.get("/detail/{train_id}")
+def get_train(train_id: int):
+    return service.get_train(train_id)
+
+
 @trains_router.post("/", response_model=TrainOutSchema)
 def create_train(train_data: TrainSchema):
     return service.create_train(train_data)

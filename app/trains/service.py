@@ -40,3 +40,11 @@ def get_all_trains(repo: BaseRepository):
     return repo.get_all(Trains)
 
 
+@BaseRepository.get_repo
+def get_train(repo: BaseRepository, train_id):
+    train = repo.get_by_id(Trains, train_id)
+    if not train:
+        raise BaseApiException.bad_request("No train with provided id")
+    return train
+
+
