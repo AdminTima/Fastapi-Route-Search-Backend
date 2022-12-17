@@ -1,31 +1,32 @@
+from ..base.base_repository import BaseRepository
 from .repository import CitiesRepository
+from .models import Cities
 
 
 @CitiesRepository.get_repo
-def create_city(repo, name):
-    city_in_db = repo.get_city_by_name(name).scalar()
+def create_city(repo: CitiesRepository, city_data):
+    city_in_db = repo.get_city_by_name(city_data["name"])
     if city_in_db:
         raise Exception("Already exists")
-    return repo.create_city(name)
+    return repo.create(Cities, city_data)
 
 
-@CitiesRepository.get_repo
-def update_city(repo, city_id, new_data):
-    return repo.update_city(city_id, new_data)
+@BaseRepository.get_repo
+def update_city(repo: BaseRepository, city_id, new_data):
+    return repo.update_by_id(Cities, city_id, new_data)
 
 
-@CitiesRepository.get_repo
-def remove_city(repo, city_id):
-    city_in_db = repo.get_city_by_id(city_id)
+@BaseRepository.get_repo
+def remove_city(repo: BaseRepository, city_id):
+    city_in_db = repo.get_by_id(Cities, city_id)
     if not city_in_db:
         raise Exception("Not found")
-    repo.remove_city(city_in_db)
-    return city_in_db
+    return repo.remove_by_id(Cities, city_id)
 
 
-@CitiesRepository.get_repo
-def get_all_cities(repo):
-    return repo.get_all_cities()
+@BaseRepository.get_repo
+def get_all_cities(repo: BaseRepository):
+    return repo.get_all(Cities)
 
 
 

@@ -14,7 +14,7 @@ def get_all():
 
 @cities_router.post("/", response_model=CityOutSchema)
 def create_city(city: CitySchema):
-    return service.create_city(city.name)
+    return service.create_city(city.dict())
 
 
 @cities_router.delete("/{city_id}", response_model=CityOutSchema)
