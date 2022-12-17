@@ -1,6 +1,8 @@
 from fastapi import APIRouter
 from .schemas import TrainSchema, TrainOutSchema
 from . import service
+from ..base.base_api_exception import BaseApiException
+from fastapi.exceptions import HTTPException
 
 
 trains_router = APIRouter()

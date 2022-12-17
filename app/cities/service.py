@@ -1,13 +1,14 @@
 from ..base.base_repository import BaseRepository
 from .repository import CitiesRepository
 from .models import Cities
+from ..base.base_api_exception import BaseApiException
 
 
 @CitiesRepository.get_repo
 def create_city(repo: CitiesRepository, city_data):
     city_in_db = repo.get_city_by_name(city_data["name"])
     if city_in_db:
-        raise Exception("Already exists")
+        raise BaseApiException.bad_request("Such entry already exists")
     return repo.create(Cities, city_data)
 
 
@@ -20,7 +21,7 @@ def update_city(repo: BaseRepository, city_id, new_data):
 def remove_city(repo: BaseRepository, city_id):
     city_in_db = repo.get_by_id(Cities, city_id)
     if not city_in_db:
-        raise Exception("Not found")
+        raise BaseApiException.not_found("Not found such city")
     return repo.remove_by_id(Cities, city_id)
 
 
